@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <title>Invitación de boda - Nombre1 & Nombre2</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        :root {
+            --color-fondo: #f7f4ef;
+            --color-principal: #b08a5a;
+            --color-secundario: #333333;
+            --color-texto: #444444;
+            --color-blanco: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background-color: var(--color-fondo);
+            color: var(--color-texto);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        header.hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--color-blanco);
+            background-image: url("https://images.pexels.com/photos/2959206/pexels-photo-2959206.jpeg");
+            /* Cambia esta URL por una foto de ustedes o de la boda */
+            background-size: cover;
+            background-position: center;
+        }
+
+        header.hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to bottom,
+                rgba(0, 0, 0, 0.6),
+                rgba(0, 0, 0, 0.4)
+            );
+        }
+
+        .hero-content {
+            position: relative;
+            padding: 2rem;
+        }
+
+        .hero-subtitle {
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-size: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-title {
+            font-size: 2.8rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .hero-date {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.9rem 1.8rem;
+            border-radius: 999px;
+            background-color: var(--color-principal);
+            color: var(--color-blanco);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            font-size: 0.75rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            background-color: #997349;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.35);
+        }
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background-color: rgba(247, 244, 239, 0.95);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-inner {
+            max-width: 960px;
+            margin: 0 auto;
+            display: flex;
+            padding: 0.7rem 1rem;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-logo {
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            color: var(--color-secundario);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+        }
+
+        .nav-links a {
+            padding: 0.3rem 0.5rem;
+            border-radius: 999px;
+        }
+
+        .nav-links a:hover {
+            background-color: rgba(0, 0, 0, 0.03);
+        }
+
+        main {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem 4rem;
+        }
+
+        section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-size: 0.8rem;
+            color: var(--color-secundario);
+            margin-bottom: 0.5rem;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.7rem;
+            margin-bottom: 1.5rem;
+            color: var(--color-secundario);
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .story {
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 0.95rem;
+        }
+
+        .story p + p {
+            margin-top: 1rem;
+        }
+
+        .grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .grid-2 {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        .card {
+            background-color: var(--color-blanco);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+        }
+
+        .card-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--color-secundario);
+        }
+
+        .card-subtitle {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            margin-bottom: 0.8rem;
+            color: #777777;
+        }
+
+        .details-list {
+            list-style: none;
+            font-size: 0.95rem;
+        }
+
+        .details-list li + li {
+            margin-top: 0.4rem;
+        }
+
+        .chip {
+            display: inline-block;
+            padding: 0.25rem 0.7rem;
+            border-radius: 999px;
+            background-color: rgba(176, 138, 90, 0.08);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            margin-top: 0.7rem;
+        }
+
+        .countdown {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 0.8rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            padding-top: 75%;
+            border-radius: 0.9rem;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
+            background-color: #ddd;
+        }
+
+        .gallery-item:nth-child(1) {
+            background-image: url("https://images.pexels.com/photos/949223/pexels-photo-949223.jpeg");
+        }
+        .gallery-item:nth-child(2) {
+            background-image: url("https://images.pexels.com/photos/752842/pexels-photo-752842.jpeg");
+        }
+        .gallery-item:nth-child(3) {
+            background-image: url("https://images.pexels.com/photos/1829771/pexels-photo-1829771.jpeg");
+        }
+        .gallery-item:nth-child(4) {
+            background-image: url("https://images.pexels.com/photos/3951622/pexels-photo-3951622.jpeg");
+        }
+
+        .rsvp-box {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .rsvp-box p {
+            margin-bottom: 1rem;
+        }
+
+        .rsvp-actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.7rem;
+            margin-top: 1rem;
+        }
+
+        .btn-secondary {
+            display: inline-block;
+            padding: 0.7rem 1.4rem;
+            border-radius: 999px;
+            border: 1px solid var(--color-principal);
+            color: var(--color-principal);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            font-weight: 600;
+            background-color: transparent;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--color-principal);
+            color: var(--color-blanco);
+        }
+
+        footer {
+            text-align: center;
+            padding: 1.8rem 1rem 1.2rem;
+            font-size: 0.8rem;
+            color: #777777;
+        }
+
+        footer span {
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+    <!-- PORTADA -->
+    <header class="hero" id="inicio">
+        <div class="hero-content">
+            <div class="hero-subtitle">Estás invitado a nuestra boda</div>
+            <h1 class="hero-title">Nombre1 &amp; Nombre2</h1>
+            <div class="hero-date">23 · 11 · 2025 · Buenos Aires</div>
+            <a href="#rsvp" class="btn">Confirmar asistencia</a>
+        </div>
+    </header>
+
+    <!-- NAVEGACIÓN -->
+    <nav>
+        <div class="nav-inner">
+            <div class="nav-logo">N1 &amp; N2</div>
+            <div class="nav-links">
+                <a href="#historia">Historia</a>
+                <a href="#detalles">Detalles</a>
+                <a href="#galeria">Galería</a>
+                <a href="#rsvp">RSVP</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main>
+        <!-- Nuestra historia -->
+        <section id="historia">
+            <div class="section-title">Nuestra historia</div>
+            <div class="section-subtitle">Cómo empezó todo</div>
+            <div class="story">
+                <p>
+                    Nos conocimos en 2018, en una tarde cualquiera que terminó siendo todo menos común.
+                    Desde entonces compartimos risas, viajes, cafés interminables y sueños que hoy
+                    queremos celebrar con vos.
+                </p>
+                <p>
+                    Este día es muy importante para nosotros, y nada nos haría más felices que
+                    tenerte presente para acompañarnos en este paso tan especial.
+                </p>
+            </div>
+        </section>
+
+        <!-- Detalles del evento -->
+        <section id="detalles">
+            <div class="section-title">Detalles</div>
+            <div class="section-subtitle">Ceremonia &amp; Fiesta</div>
+
+            <div class="grid grid-2">
+                <div class="card">
+                    <div class="card-title">Ceremonia</div>
+                    <div class="card-subtitle">Iglesia / Registro civil</div>
+                    <ul class="details-list">
+                        <li><strong>Fecha:</strong> 23 de noviembre de 2025</li>
+                        <li><strong>Hora:</strong> 17:00 hs</li>
+                        <li><strong>Lugar:</strong> Parroquia Ejemplo, Buenos Aires</li>
+                    </ul>
+                    <div class="chip">Llegar 15 min antes</div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">Fiesta</div>
+                    <div class="card-subtitle">Recepción</div>
+                    <ul class="details-list">
+                        <li><strong>Hora:</strong> 20:00 hs</li>
+                        <li><strong>Salón:</strong> Salón Ejemplo</li>
+                        <li><strong>Dirección:</strong> Calle Falsa 123, Buenos Aires</li>
+                    </ul>
+                    <div class="chip">Dress code: Elegante</div>
+                </div>
+            </div>
+
+            <div class="text-center" style="margin-top:2rem;">
+                <p>Contamos con tu presencia para hacer este día inolvidable.</p>
+                <div id="contador" class="countdown"></div>
+            </div>
+        </section>
+
+        <!-- Galería (puedes cambiar las fotos por las tuyas) -->
+        <section id="galeria">
+            <div class="section-title">Recuerdos</div>
+            <div class="section-subtitle">Algunos momentos juntos</div>
+            <div class="gallery">
+                <div class="gallery-item"></div>
+                <div class="gallery-item"></div>
+                <div class="gallery-item"></div>
+                <div class="gallery-item"></div>
+            </div>
+        </section>
+
+        <!-- RSVP -->
+        <section id="rsvp">
+            <div class="section-title">Confirmación</div>
+            <div class="section-subtitle">¿Podés venir?</div>
+            <div class="rsvp-box">
+                <p>
+                    Te agradecemos si podés confirmar tu asistencia antes del
+                    <strong>1 de noviembre de 2025</strong>.
+                </p>
+                <p>
+                    Podés hacerlo por WhatsApp o por correo electrónico:
+                </p>
+                <div class="rsvp-actions">
+                    <!-- Cambia el teléfono y email por los tuyos -->
+                    <a class="btn" href="https://wa.me/5491112345678" target="_blank" rel="noopener">
+                        Confirmar por WhatsApp
+                    </a>
+                    <a class="btn-secondary" href="mailto:invitacion@example.com?subject=Confirmo asistencia boda">
+                        Confirmar por email
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>Con cariño,</p>
+        <p><span>Nombre1 &amp; Nombre2</span></p>
+    </footer>
+
+    <!-- JavaScript para scroll suave y contador -->
+    <script>
+        // Scroll suave al hacer clic en links del menú
+        document.querySelectorAll('a[href^="#"]').forEach(function (enlace) {
+            enlace.addEventListener("click", function (e) {
+                const destino = document.querySelector(this.getAttribute("href"));
+                if (destino) {
+                    e.preventDefault();
+                    destino.scrollIntoView({ behavior: "smooth" });
+                }
+            });
+        });
+
+        // Contador regresivo hasta la fecha de la boda
+        // Cambia la fecha a la que corresponda
+        const fechaBoda = new Date("2025-11-23T17:00:00");
+
+        function actualizarContador() {
+            const ahora = new Date();
+            const diff = fechaBoda - ahora;
+
+            const contenedor = document.getElementById("contador");
+            if (!contenedor) return;
+
+            if (diff <= 0) {
+                contenedor.textContent = "¡Hoy es el gran día!";
+                return;
+            }
+
+            const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const horas = Math.floor(
+                (diff / (1000 * 60 * 60)) % 24
+            );
+            const minutos = Math.floor(
+                (diff / (1000 * 60)) % 60
+            );
+
+            contenedor.textContent =
+                "Faltan " + dias + " días, " + horas + " horas y " + minutos + " minutos";
+        }
+
+        actualizarContador();
+        setInterval(actualizarContador, 60 * 1000);
+    </script>
+</body>
+</html>
