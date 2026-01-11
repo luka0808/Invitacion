@@ -53,9 +53,6 @@
       
       /* --- LA SOLUCIÓN INICIO (Ajuste Foco Caras) --- */
       background-position: 50% 15%; 
-      
-      /* IMPORTANTE: z-index mayor que el marco decorativo (999) para taparlo */
-      z-index: 1000; 
     }
 
     .hero-content { padding: 2rem; max-width: 800px; width: 100%; margin-top: 3rem; }
@@ -89,8 +86,7 @@
       position: fixed; top: 0; width: 100%; height: var(--nav-height);
       background: rgba(247,244,239, 0.95);
       backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-      z-index: 1001; /* Mayor que hero y marco */
-      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      z-index: 1000; border-bottom: 1px solid rgba(0, 0, 0, 0.05);
       display: flex; align-items: center;
     }
     .nav-container {
@@ -275,43 +271,6 @@
     @media (max-width: 768px) { .modal-prev, .modal-next { font-size: 2rem; padding: 0.5rem; } }
 
     footer { text-align: center; padding: 2rem 1rem; font-size: 0.8rem; color: #888; background-color: rgba(0,0,0,0.02); margin-top: 2rem; }
-
-    /* ========================================= */
-    /* ===== MARCO DECORATIVO CSS (DOBLE LÍNEA) ===== */
-    /* ========================================= */
-    body::before {
-        content: "";
-        position: fixed; /* Se queda fijo en la pantalla */
-
-        /* Empieza justo debajo de la barra de navegación (70px) */
-        top: 70px;
-        left: 15px;
-        right: 15px;
-        bottom: 15px;
-
-        /* Línea exterior delgada */
-        border: 1px solid var(--color-principal);
-
-        /* Truco CSS para la segunda línea interior */
-        box-shadow: inset 0 0 0 6px var(--color-fondo),
-                    inset 0 0 0 7px var(--color-principal);
-
-        /* Bordes redondeados */
-        border-radius: 15px;
-
-        pointer-events: none; /* Permite clicks a través */
-        z-index: 999; /* Por encima del fondo, bajo el menú */
-    }
-
-    @media (max-width: 768px) {
-        body::before {
-            top: 70px;
-            left: 8px; right: 8px; bottom: 8px;
-            box-shadow: inset 0 0 0 4px var(--color-fondo),
-                        inset 0 0 0 5px var(--color-principal);
-            border-radius: 10px;
-        }
-    }
   </style>
 </head>
 
