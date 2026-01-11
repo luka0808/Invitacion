@@ -50,7 +50,9 @@
         url("Fotos/Portada.jpeg"); 
       background-size: cover;
       background-repeat: no-repeat;
-      background-position: 50% 35%; 
+      
+      /* --- LA SOLUCIÓN INICIO (Ajuste Foco Caras) --- */
+      background-position: 50% 15%; 
     }
 
     .hero-content { padding: 2rem; max-width: 800px; width: 100%; margin-top: 3rem; }
@@ -98,34 +100,60 @@
     .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 5px; }
     .bar { height: 2px; width: 24px; background: var(--color-secundario); transition: all 0.3s ease; }
 
-    /* ===== ESTILO WINAMP "ELEGANTE" ===== */
+    /* ===== ESTILO WINAMP "ELEGANTE" (Play vs Barras) ===== */
     .winamp-btn {
-        background: transparent; /* Fondo transparente */
-        border: 1px solid var(--color-principal); /* Borde del color de la boda */
+        background: transparent;
+        border: 1px solid var(--color-principal);
         border-radius: 4px;
         width: 40px;
         height: 30px;
         cursor: pointer;
         display: flex;
-        align-items: flex-end;
+        align-items: center; /* Centrar contenido */
         justify-content: center;
-        gap: 3px;
         padding: 3px;
         margin-left: 5px;
         transition: all 0.3s ease;
+        position: relative;
     }
 
     .winamp-btn:hover {
-        background: rgba(176, 138, 90, 0.1); /* Brillo suave al pasar mouse */
+        background: rgba(176, 138, 90, 0.1);
         transform: scale(1.05);
+    }
+
+    /* --- ESTADO 1: PLAY ICON --- */
+    .play-icon {
+        font-size: 14px;
+        color: var(--color-principal);
+        display: block; /* Visible por defecto */
+    }
+
+    /* --- ESTADO 2: BARRITAS --- */
+    .equalizer-container {
+        display: none; /* Oculto por defecto */
+        align-items: flex-end;
+        justify-content: center;
+        gap: 3px;
+        height: 100%;
+        width: 100%;
     }
 
     .wa-bar {
         width: 4px;
         height: 20%;
-        background-color: var(--color-principal); /* Barritas color dorado/tierra */
+        background-color: var(--color-principal);
         border-radius: 2px;
         transition: height 0.1s;
+    }
+
+    /* CUANDO SUENA LA MÚSICA (.playing) */
+    .winamp-btn.playing .play-icon {
+        display: none; /* Oculta Play */
+    }
+    
+    .winamp-btn.playing .equalizer-container {
+        display: flex; /* Muestra Barritas */
     }
 
     .winamp-btn.playing .wa-bar {
@@ -133,6 +161,7 @@
         opacity: 0.9;
     }
 
+    /* Ritmo de animación */
     .winamp-btn.playing .wa-bar:nth-child(1) { animation-duration: 0.4s; }
     .winamp-btn.playing .wa-bar:nth-child(2) { animation-duration: 0.45s; }
     .winamp-btn.playing .wa-bar:nth-child(3) { animation-duration: 0.35s; }
@@ -203,10 +232,16 @@
     .carousel-btn.next { right: 10px; }
     .carousel-btn:hover { background-color: #fff; }
 
-    /* ===== MODAL ===== */
-    .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); align-items: center; justify-content: center; }
-    .modal-content { max-width: 90%; max-height: 90vh; border-radius: 5px; box-shadow: 0 0 20px rgba(255,255,255,0.1); }
-    .close-modal { position: absolute; top: 20px; right: 30px; color: #f1f1f1; font-size: 40px; font-weight: bold; cursor: pointer; z-index: 2001; }
+    /* ===== MODAL (FOTO GRANDE) ===== */
+    .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.95); align-items: center; justify-content: center; }
+    .modal-content { max-width: 85%; max-height: 85vh; border-radius: 5px; box-shadow: 0 0 20px rgba(255,255,255,0.1); }
+    .close-modal { position: absolute; top: 20px; right: 30px; color: #f1f1f1; font-size: 40px; font-weight: bold; cursor: pointer; z-index: 2002; transition: color 0.3s; }
+    .close-modal:hover { color: var(--color-principal); }
+    .modal-prev, .modal-next { position: absolute; top: 50%; transform: translateY(-50%); color: white; font-size: 3rem; font-weight: bold; cursor: pointer; z-index: 2002; padding: 1rem; user-select: none; transition: color 0.3s; }
+    .modal-prev { left: 10px; }
+    .modal-next { right: 10px; }
+    .modal-prev:hover, .modal-next:hover { color: var(--color-principal); }
+    @media (max-width: 768px) { .modal-prev, .modal-next { font-size: 2rem; padding: 0.5rem; } }
 
     footer { text-align: center; padding: 2rem 1rem; font-size: 0.8rem; color: #888; background-color: rgba(0,0,0,0.02); margin-top: 2rem; }
   </style>
@@ -232,12 +267,16 @@
         <li><a href="#rsvp" class="nav-link" onclick="cerrarMenu()">RSVP</a></li>
         
         <li>
-            <button class="winamp-btn" id="btnMusic" onclick="toggleMusic()" title="Play Música">
-                <div class="wa-bar"></div>
-                <div class="wa-bar"></div>
-                <div class="wa-bar"></div>
-                <div class="wa-bar"></div>
-                <div class="wa-bar"></div>
+            <button class="winamp-btn" id="btnMusic" onclick="toggleMusic()" title="Música">
+                <span class="play-icon">▶</span>
+                
+                <div class="equalizer-container">
+                    <div class="wa-bar"></div>
+                    <div class="wa-bar"></div>
+                    <div class="wa-bar"></div>
+                    <div class="wa-bar"></div>
+                    <div class="wa-bar"></div>
+                </div>
             </button>
         </li>
       </ul>
@@ -338,8 +377,10 @@
     <p> © 2026 Nene & Dani </p>
   </footer>
 
-  <div id="myModal" class="modal" onclick="closeModal()">
-    <span class="close-modal">×</span>
+  <div id="myModal" class="modal">
+    <span class="close-modal" onclick="closeModal()">×</span>
+    <a class="modal-prev" onclick="changeModalImage(-1)">❮</a>
+    <a class="modal-next" onclick="changeModalImage(1)">❯</a>
     <img class="modal-content" id="img01">
   </div>
 
@@ -387,14 +428,31 @@
     carouselContainer.addEventListener('mouseleave', () => autoPlay = setInterval(() => moveSlide(1), 3000));
     window.addEventListener('resize', () => moveSlide(0));
 
-    // MODAL
+    // ===== LÓGICA DEL MODAL CON NAVEGACIÓN =====
     const modal = document.getElementById("myModal");
     const modalImg = document.getElementById("img01");
+    const galleryImages = document.querySelectorAll('.carousel-item img');
+    let currentModalIndex = 0;
+
     function openModal(element) {
-        const img = element.querySelector('img');
+        const clickedImg = element.querySelector('img');
         modal.style.display = "flex";
-        modalImg.src = img.src;
+        modalImg.src = clickedImg.src;
+        for (let i = 0; i < galleryImages.length; i++) {
+            if (galleryImages[i] === clickedImg) {
+                currentModalIndex = i;
+                break;
+            }
+        }
     }
+
+    function changeModalImage(n) {
+        currentModalIndex += n;
+        if (currentModalIndex >= galleryImages.length) currentModalIndex = 0;
+        if (currentModalIndex < 0) currentModalIndex = galleryImages.length - 1;
+        modalImg.src = galleryImages[currentModalIndex].src;
+    }
+
     function closeModal() { modal.style.display = "none"; }
 
     // MÚSICA
